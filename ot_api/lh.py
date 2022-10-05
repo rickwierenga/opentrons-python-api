@@ -76,7 +76,15 @@ def drop_tip(labware_id: str, well_name: str, pipette_id: str, run_id: Optional[
   return ot_api.runs.enqueue_command("dropTip", params, intent="setup", run_id=run_id)
 
 @command
-def aspirate(labware_id: str, well_name: str, volume: float, flow_rate: float, pipette_id, run_id: Optional[str]=None):
+def aspirate(
+  labware_id: str,
+  well_name: str,
+  volume: float,
+  flow_rate: float,
+  pipette_id,
+  run_id: Optional[str]=None,
+  offset_z: float=0
+):
   params = {
     "labwareId": labware_id,
     "wellName": well_name,
@@ -85,7 +93,7 @@ def aspirate(labware_id: str, well_name: str, volume: float, flow_rate: float, p
       "offset": {
         "x": 0,
         "y": 0,
-        "z": 0
+        "z": offset_z
       },
     },
     "flowRate": flow_rate,
@@ -96,7 +104,15 @@ def aspirate(labware_id: str, well_name: str, volume: float, flow_rate: float, p
   return ot_api.runs.enqueue_command("aspirate", params, intent="setup", run_id=run_id)
 
 @command
-def dispense(labware_id: str, well_name: str, volume: float, flow_rate: float, pipette_id, run_id: Optional[str]=None):
+def dispense(
+  labware_id: str,
+  well_name: str,
+  volume: float,
+  flow_rate: float,
+  pipette_id,
+  run_id: Optional[str]=None,
+  offset_z: float=0
+):
   params = {
     "labwareId": labware_id,
     "wellName": well_name,
@@ -105,7 +121,7 @@ def dispense(labware_id: str, well_name: str, volume: float, flow_rate: float, p
       "offset": {
         "x": 0,
         "y": 0,
-        "z": 0
+        "z": offset_z
       },
     },
     "flowRate": flow_rate,
