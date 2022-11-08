@@ -32,7 +32,7 @@ run_id = ot_api.runs.create()
 ot_api.set_run(run_id) # set run globally, alternative to `run_id` parameter for functions
 
 # Add pipettes that are detected in hardware to the software
-left_pipette, right_pipette = ot_api.labware.add_mounted_pipettes()
+left_pipette, right_pipette = ot_api.lh.add_mounted_pipettes()
 left_pipette_id = left_pipette["pipetteId"]
 
 # Defining labware
