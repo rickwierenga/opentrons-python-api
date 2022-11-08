@@ -41,16 +41,24 @@ def add_mounted_pipettes(run_id=None) -> Tuple[str, str]:
   return left, right
 
 @command
-def pick_up_tip(labware_id: str, well_name: str, pipette_id: str, run_id: Optional[str]=None):
+def pick_up_tip(
+  labware_id: str,
+  well_name: str,
+  pipette_id: str,
+  offset_x: float = 0,
+  offset_y: float = 0,
+  offset_z: float = 0,
+  run_id: Optional[str]=None
+):
   params = {
     "labwareId": labware_id,
     "wellName": well_name,
     "wellLocation": {
       "origin": "top",
       "offset": {
-        "x": 0,
-        "y": 0,
-        "z": 0
+        "x": offset_x,
+        "y": offset_y,
+        "z": offset_z
       }
     },
     "pipetteId": pipette_id
@@ -58,16 +66,24 @@ def pick_up_tip(labware_id: str, well_name: str, pipette_id: str, run_id: Option
   return ot_api.runs.enqueue_command("pickUpTip", params, intent="setup", run_id=run_id)
 
 @command
-def drop_tip(labware_id: str, well_name: str, pipette_id: str, run_id: Optional[str]=None):
+def drop_tip(
+  labware_id: str,
+  well_name: str,
+  pipette_id: str,
+  offset_x: float = 0,
+  offset_y: float = 0,
+  offset_z: float = 0,
+  run_id: Optional[str]=None
+):
   params = {
     "labwareId": labware_id,
     "wellName": well_name,
     "wellLocation": {
       "origin": "top",
       "offset": {
-        "x": 0,
-        "y": 0,
-        "z": 0
+        "x": offset_x,
+        "y": offset_y,
+        "z": offset_z
       }
     },
     "pipetteId": pipette_id
@@ -83,7 +99,9 @@ def aspirate(
   flow_rate: float,
   pipette_id,
   run_id: Optional[str]=None,
-  offset_z: float=0
+  offset_x: float = 0,
+  offset_y: float = 0,
+  offset_z: float = 0,
 ):
   params = {
     "labwareId": labware_id,
@@ -91,8 +109,8 @@ def aspirate(
     "wellLocation": {
       "origin": "top",
       "offset": {
-        "x": 0,
-        "y": 0,
+        "x": offset_x,
+        "y": offset_y,
         "z": offset_z
       },
     },
@@ -111,7 +129,9 @@ def dispense(
   flow_rate: float,
   pipette_id,
   run_id: Optional[str]=None,
-  offset_z: float=0
+  offset_x: float = 0,
+  offset_y: float = 0,
+  offset_z: float = 0,
 ):
   params = {
     "labwareId": labware_id,
@@ -119,8 +139,8 @@ def dispense(
     "wellLocation": {
       "origin": "top",
       "offset": {
-        "x": 0,
-        "y": 0,
+        "x": offset_x,
+        "y": offset_y,
         "z": offset_z
       },
     },
