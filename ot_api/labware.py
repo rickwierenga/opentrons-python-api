@@ -7,15 +7,18 @@ import ot_api.runs
 
 @request_with_run_id
 def define(labware_def, run_id=None):
-  data = dict(data=labware_def)
+  """ Define a labware in the current run. Labware can be added with the `add` command """
+  data = {"data": labware_def}
   return ot_api.requestor.post(f"/runs/{run_id}/labware_definitions", data)
 
 @request_with_run_id
 def undefine(labware_def_id, run_id=None):
+  """ Remove a labware definition """
   return ot_api.requestor.delete(f"/runs/{run_id}/labware_definitions/{labware_def_id}")
 
 @command
 def add(load_name, namespace, version, slot: int, run_id: str = None, labware_id=None, display_name=None):
+  """ Add a labware to a slot """
   assert slot in range(1, 13)
   data = {
     "location": {
@@ -28,3 +31,15 @@ def add(load_name, namespace, version, slot: int, run_id: str = None, labware_id
     "displayName": display_name,
   }
   return ot_api.runs.enqueue_command("loadLabware", data, intent="setup", run_id=run_id)
+
+@command
+def load_module(slot: int, model: str, module_id: str, run_id: str = None):
+  """ Load a module into a slot """
+  assert slot in range(1, 13)
+  ot_api.runs.enqueue_command("loadModule",
+    params={"location": {
+      "slotName": str(slot),
+    },
+    "model": model,
+    "moduleId": module_id,
+    }, intent="setup", run_id=run_id)
