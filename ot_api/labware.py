@@ -31,15 +31,3 @@ def add(load_name, namespace, version, slot: int, run_id: str = None, labware_id
     "displayName": display_name,
   }
   return ot_api.runs.enqueue_command("loadLabware", data, intent="setup", run_id=run_id)
-
-@command
-def load_module(slot: int, model: str, module_id: str, run_id: str = None):
-  """ Load a module into a slot """
-  assert slot in range(1, 13)
-  ot_api.runs.enqueue_command("loadModule",
-    params={"location": {
-      "slotName": str(slot),
-    },
-    "model": model,
-    "moduleId": module_id,
-    }, intent="setup", run_id=run_id)

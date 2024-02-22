@@ -18,4 +18,5 @@ def set_run(new_run_id):
 import ot_api.health as health
 import ot_api.labware as labware
 import ot_api.lh as lh
+import ot_api.modules as modules
 import ot_api.runs as runs
