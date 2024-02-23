@@ -150,3 +150,33 @@ def dispense(
   }
 
   return ot_api.runs.enqueue_command("dispense", params, intent="setup", run_id=run_id)
+
+
+@command
+def move_arm(
+  pipette_id: str,
+  location_x: float,
+  location_y: float,
+  location_z: float,
+  minimum_z_height: Optional[float],
+  speed: Optional[float],
+  force_direct: bool = False,
+  run_id: Optional[str]=None
+):
+  params = {
+    "pipetteId": pipette_id,
+    "coordinates": {
+      "x": location_x,
+      "y": location_y,
+      "z": location_z
+    },
+    "forceDirect": force_direct
+  }
+
+  if minimum_z_height is not None:
+    params["minimumZHeight"] = minimum_z_height
+
+  if speed is not None:
+    params["speed"] = speed
+
+  return ot_api.runs.enqueue_command("moveToCoordinates", params, intent="setup", run_id=run_id)
