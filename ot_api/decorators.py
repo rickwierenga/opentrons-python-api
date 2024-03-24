@@ -34,7 +34,7 @@ def command(f, timeout=30):
 
   def get_ot_error(name) -> ot_errors.ProtocolEngineError:
     return getattr(ot_errors, name)
-  
+
   @request_with_run_id
   def wrapper(*args, **kwargs):
     command_id = f(*args, **kwargs)
@@ -42,16 +42,20 @@ def command(f, timeout=30):
     end = datetime.datetime.now() + datetime.timedelta(seconds=timeout)
     while datetime.datetime.now() < end:
       result = ot_api.runs.get_command(command_id, run_id=kwargs["run_id"])
-    
+
       if result["data"]["status"] == "failed":
         error_data = result["data"]["error"]
-        error_class = get_ot_error(error_data["errorType"])
+        error_type = error_data["errorType"]
+        if error_type == "PythonException":
+          error_class = RuntimeError
+        else:
+          error_class = get_ot_error(error_type)
         raise error_class(error_data["detail"])
       elif result["data"]["status"] in ["queued", "running"]:
         continue
- 
+
       return result
-    
+
     raise RuntimeError("Command timed out")
 
   return wrapper

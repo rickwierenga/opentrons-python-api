@@ -7,4 +7,3 @@ def get():
 
 def home():
   return post("/robot/home", data={"target": "robot"})
-
