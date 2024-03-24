@@ -6,7 +6,7 @@ from ot_api.decorators import command, request_with_run_id
 import ot_api.requestor as requestor
 import ot_api.runs
 
-def load_pipette(pipette_name, mount, run_id: Optional[str] = None):
+def load_pipette(pipette_name, mount, run_id: Optional[str] = None) -> dict:
   assert mount in ["left", "right"]
 
   @command
@@ -21,7 +21,7 @@ def load_pipette(pipette_name, mount, run_id: Optional[str] = None):
   return resp["data"]["result"]
 
 @request_with_run_id
-def add_mounted_pipettes(run_id=None) -> Tuple[str, str]:
+def add_mounted_pipettes(run_id=None) -> Tuple[Optional[dict], Optional[dict]]:
   mounted_pipettes = requestor.get("/pipettes")
 
   left_pipette = mounted_pipettes["left"]
