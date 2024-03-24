@@ -180,3 +180,37 @@ def move_arm(
     params["speed"] = speed
 
   return ot_api.runs.enqueue_command("moveToCoordinates", params, intent="setup", run_id=run_id)
+
+@command
+def move_to_addressable_area_for_drop_tip(
+  pipette_id: str,
+  offset_x: float = 0,
+  offset_y: float = 0,
+  offset_z: float = 0,
+  run_id: Optional[str]=None,
+):
+  params = {
+    "pipetteId": pipette_id,
+    "addressableAreaName": "fixedTrash",
+    "wellName": "A1",
+    "wellLocation": {
+      "origin": "default",
+      "offset": {
+        "x": offset_x,
+        "y": offset_y,
+        "z": offset_z
+      }
+    },
+    "alternateDropLocation": False
+  }
+
+  return ot_api.runs.enqueue_command("moveToAddressableAreaForDropTip", params,
+                                     intent="setup", run_id=run_id)
+
+@command
+def drop_tip_in_place(pipette_id: str, run_id: Optional[str]=None):
+  params = {
+    "pipetteId": pipette_id
+  }
+
+  return ot_api.runs.enqueue_command("dropTipInPlace", params, intent="setup", run_id=run_id)
