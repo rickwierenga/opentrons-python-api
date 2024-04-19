@@ -29,7 +29,7 @@ def request_with_run_id(f):
   return wrapper
 
 
-def command(f, timeout=30):
+def command(f):
   """ Decorator for commands. Uses request_with_run_id. Waits for success or failure, potentially raising an error. """
 
   def get_ot_error(name) -> ot_errors.ProtocolEngineError:
@@ -38,6 +38,9 @@ def command(f, timeout=30):
   @request_with_run_id
   def wrapper(*args, **kwargs):
     command_id = f(*args, **kwargs)
+
+    # each method supports a `timeout` kwarg
+    timeout = kwargs.pop("timeout", 30)
 
     end = datetime.datetime.now() + datetime.timedelta(seconds=timeout)
     while datetime.datetime.now() < end:
