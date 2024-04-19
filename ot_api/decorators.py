@@ -30,7 +30,7 @@ def request_with_run_id(f):
   return wrapper
 
 
-def command(f, timeout=30):
+def command(f):
   """ Decorator for commands. Uses request_with_run_id. Waits for success or failure, potentially raising an error. """
 
   def get_ot_error(name) -> ot_errors.ProtocolEngineError:
