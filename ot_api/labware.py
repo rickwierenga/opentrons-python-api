@@ -21,12 +21,19 @@ def undefine(labware_def_id, run_id=None):
 @command
 def add(load_name, namespace, version, ot_location: Union[int, str], run_id: str = None, labware_id=None, display_name=None):
   """ Add a labware to a slot """
-  if isinstance(ot_location, int) and not ot_location in range(1, 13):
-    raise ValueError("Invalid slot")
-  data = {
-    "location": {
+  if isinstance(ot_location, int):
+    if not ot_location in range(1, 13):
+      raise ValueError("Invalid slot")
+    location = {
       "slotName": str(ot_location),
-    },
+    }
+  else:
+    location = {
+      "moduleId": ot_location,
+    }
+
+  data = {
+    "location": location,
     "loadName": load_name,
     "namespace": namespace,
     "version": version,
