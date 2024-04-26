@@ -148,7 +148,7 @@ def dispense(
     "flowRate": flow_rate,
     "volume": volume,
     "pipetteId": pipette_id,
-    "blowOut": blow_out_air_volume
+    "pushOut": blow_out_air_volume
   }
 
   return ot_api.runs.enqueue_command("dispense", params, intent="setup", run_id=run_id)
