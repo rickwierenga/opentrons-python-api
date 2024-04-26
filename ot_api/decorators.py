@@ -40,6 +40,8 @@ def command(f):
   def wrapper(*args, **kwargs):
     command_id = f(*args, **kwargs)
 
+    timeout = kwargs.get("timeout", 30)
+
     end = datetime.datetime.now() + datetime.timedelta(seconds=timeout)
     while datetime.datetime.now() < end:
       result = ot_api.runs.get_command(command_id, run_id=kwargs["run_id"])
