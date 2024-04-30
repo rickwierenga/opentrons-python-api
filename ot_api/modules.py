@@ -63,10 +63,10 @@ def thermocycler_deactivate_block(module_id: str, run_id: str = None):
     {"moduleId": module_id}, intent="setup", run_id=run_id)
 
 @command
-def thermocycler_deactivate_lid(profile: list, module_id: str, run_id: str = None):
+def thermocycler_deactivate_lid(module_id: str, run_id: str = None):
   """ Deactivate thermocycler lid """
   return ot_api.runs.enqueue_command("thermocycler/deactivateLid",
-    {"profile": profile, "moduleId": module_id}, intent="setup", run_id=run_id)
+    {"moduleId": module_id}, intent="setup", run_id=run_id)
 
 @command
 def thermocycler_run_profile(profile: list, block_max_volume: float, module_id: str, run_id: str = None):
