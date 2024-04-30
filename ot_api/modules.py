@@ -67,3 +67,9 @@ def thermocycler_deactivate_lid(module_id: str, run_id: str = None):
   """ Deactivate thermocycler lid """
   return ot_api.runs.enqueue_command("thermocycler/deactivateLid",
     {"moduleId": module_id}, intent="setup", run_id=run_id)
+
+@command
+def thermocycler_run_profile(module_id: str, run_id: str = None):
+  """ Execute thermocycler profile run """
+  return ot_api.runs.enqueue_command("thermocycler/runProfile",
+    {"moduleId": module_id}, intent="setup", run_id=run_id)
