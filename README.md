@@ -36,10 +36,18 @@ left_pipette, right_pipette = ot_api.lh.add_mounted_pipettes()
 left_pipette_id = left_pipette["pipetteId"]
 
 # Defining labware
-labware_def = ot_api.labware.define(labware_definition) # json from opentrons-shared-data
+data = ot_api.labware.define(labware_definition) # json from opentrons-shared-data
+namespace, definition, version = data["data"]["definitionUri"].split("/")
 
 # Adding labware
-labware_id = ot_api.labware.add(labware_def, slot=1)
+labware_id = "arbitrary id for labware"
+ot_api.labware.add(
+  load_name=definition,
+  namespace=namespace,
+  version=version,
+  ot_location=1, # slot
+  labware_id=labware_id
+)
 
 # Picking up a tip
 ot_api.lh.pick_up_tip(labware_id=labware_id, well_name="A1", pipette_id=left_pipette_id)
