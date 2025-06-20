@@ -54,7 +54,7 @@ def pick_up_tip(
     "labwareId": labware_id,
     "wellName": well_name,
     "wellLocation": {
-      "origin": "top",
+      "origin": "bottom",
       "offset": {
         "x": offset_x,
         "y": offset_y,
@@ -79,7 +79,7 @@ def drop_tip(
     "labwareId": labware_id,
     "wellName": well_name,
     "wellLocation": {
-      "origin": "top",
+      "origin": "bottom",
       "offset": {
         "x": offset_x,
         "y": offset_y,
@@ -107,7 +107,7 @@ def aspirate(
     "labwareId": labware_id,
     "wellName": well_name,
     "wellLocation": {
-      "origin": "top",
+      "origin": "bottom",
       "offset": {
         "x": offset_x,
         "y": offset_y,
@@ -137,7 +137,7 @@ def dispense(
     "labwareId": labware_id,
     "wellName": well_name,
     "wellLocation": {
-      "origin": "top",
+      "origin": "bottom",
       "offset": {
         "x": offset_x,
         "y": offset_y,
