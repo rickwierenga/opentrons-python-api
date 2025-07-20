@@ -1,4 +1,4 @@
-from ot_api.decorators import command
+from ot_api.decorators import command, request_with_run_id
 import ot_api.requestor
 import ot_api.runs
 
@@ -73,3 +73,11 @@ def thermocycler_run_profile(profile: list, block_max_volume: float, module_id: 
   """ Execute thermocycler profile run """
   return ot_api.runs.enqueue_command("thermocycler/runProfile",
     {"profile": profile, "blockMaxVolumeUl": block_max_volume,"moduleId": module_id}, intent="setup", run_id=run_id)
+
+@request_with_run_id
+def thermocycler_run_profile_no_wait(profile: list, block_max_volume: float, module_id: str, run_id: str = None):
+  """ Enqueue thermocycler profile run without waiting for completion. """
+  return ot_api.runs.enqueue_command("thermocycler/runProfile",
+    {"profile": profile, "blockMaxVolumeUl": block_max_volume,"moduleId": module_id}, intent="setup", run_id=run_id)
+
+
