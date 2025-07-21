@@ -4,8 +4,8 @@ with open('README.md', encoding='utf-8') as f:
   long_description = f.read()
 
 setup(
-    name='opentrons http api client',
-    version="0.1.4",
+    name='opentrons_http_api_client',
+    version="0.1.6",
     python_requires=">=3.7",
     packages=find_packages(exclude="testing"),
     description='A Python library for interacting with the Opentrons HTTP API',
