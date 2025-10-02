@@ -11,8 +11,6 @@ setup(
     description='A Python library for interacting with the Opentrons HTTP API',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    install_requires=[
-      "requests",
-    ],
+    install_requires=[],
     url='https://github.com/rickwierenga/opentrons-python-api.git',
 )
