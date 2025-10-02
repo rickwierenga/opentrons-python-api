@@ -122,6 +122,21 @@ def aspirate(
   return ot_api.runs.enqueue_command("aspirate", params, intent="setup", run_id=run_id)
 
 @command
+def aspirate_in_place(
+  volume: float,
+  flow_rate: float,
+  pipette_id,
+  run_id: Optional[str]=None,
+):
+  params = {
+    "flowRate": flow_rate,
+    "volume": volume,
+    "pipetteId": pipette_id
+  }
+
+  return ot_api.runs.enqueue_command("aspirateInPlace", params, intent="setup", run_id=run_id)
+
+@command
 def dispense(
   labware_id: str,
   well_name: str,
@@ -150,6 +165,23 @@ def dispense(
   }
 
   return ot_api.runs.enqueue_command("dispense", params, intent="setup", run_id=run_id)
+
+@command
+def dispense_in_place(
+  volume: float,
+  flow_rate: float,
+  pipette_id,
+  pushOut: bool = False,
+  run_id: Optional[str]=None,
+):
+  params = {
+    "flowRate": flow_rate,
+    "volume": volume,
+    "pipetteId": pipette_id,
+    "pushOut": pushOut
+  }
+
+  return ot_api.runs.enqueue_command("aspirateInPlace", params, intent="setup", run_id=run_id)
 
 
 @command
