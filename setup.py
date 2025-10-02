@@ -12,7 +12,6 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     install_requires=[
-      "opentrons",
       "requests",
     ],
     url='https://github.com/rickwierenga/opentrons-python-api.git',

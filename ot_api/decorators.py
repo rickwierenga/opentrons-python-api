@@ -3,9 +3,6 @@
 import datetime
 import functools
 
-import opentrons.protocol_engine.errors as ot_errors
-from opentrons.protocol_engine.errors import ModuleNotLoadedError
-
 import ot_api
 
 
@@ -30,11 +27,12 @@ def request_with_run_id(f):
   return wrapper
 
 
+class OTError(Exception):
+  pass
+
+
 def command(f):
   """ Decorator for commands. Uses request_with_run_id. Waits for success or failure, potentially raising an error. """
-
-  def get_ot_error(name) -> ot_errors.ProtocolEngineError:
-    return getattr(ot_errors, name)
 
   @request_with_run_id
   def wrapper(*args, **kwargs):
@@ -50,14 +48,7 @@ def command(f):
         error_data = result["data"]["error"]
         print(error_data)
         error_type = error_data["errorType"]
-        if error_type == "PythonException":
-          error_class = RuntimeError
-        else:
-          error_class = get_ot_error(error_type)
-
-        if error_class is ModuleNotLoadedError:
-          raise ModuleNotLoadedError(error_data["detail"], kwargs["module_id"])
-        raise error_class(error_data["detail"])
+        raise OTError(f"Command failed with {error_type}: {error_data['detail']}")
       elif result["data"]["status"] in ["queued", "running"]:
         continue
 
