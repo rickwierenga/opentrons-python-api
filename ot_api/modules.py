@@ -79,5 +79,3 @@ def thermocycler_run_profile_no_wait(profile: list, block_max_volume: float, mod
   """ Enqueue thermocycler profile run without waiting for completion. """
   return ot_api.runs.enqueue_command("thermocycler/runProfile",
     {"profile": profile, "blockMaxVolumeUl": block_max_volume,"moduleId": module_id}, intent="setup", run_id=run_id)
-
-

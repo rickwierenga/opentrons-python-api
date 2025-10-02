@@ -1,7 +1,6 @@
 """ Actually making requests to the API """
 
 import json
-import requests
 import urllib
 
 import ot_api
