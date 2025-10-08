@@ -181,7 +181,7 @@ def dispense_in_place(
     "pushOut": pushOut
   }
 
-  return ot_api.runs.enqueue_command("aspirateInPlace", params, intent="setup", run_id=run_id)
+  return ot_api.runs.enqueue_command("dispenseInPlace", params, intent="setup", run_id=run_id)
 
 
 @command
