@@ -18,30 +18,24 @@ def get_base() -> str:
 def get_url(path):
   return urllib.parse.urljoin(get_base(), path)
 
-def _return_resp(resp) -> dict:
-  if not (200 <= resp.getcode() < 300):
-    raise Exception(resp.read().decode())
-  return json.loads(resp.read().decode())
+def make_request(req) -> dict:
+  try:
+    with urllib.request.urlopen(req) as resp:
+      return json.loads(resp.read().decode())
+  except urllib.error.HTTPError as e:
+    raise Exception(e.read().decode())
+
 
 def get(path: str) -> dict:
-  url = get_url(path)
-  req = urllib.request.Request(url, headers=headers, method="GET")
-  with urllib.request.urlopen(req) as resp:
-    return _return_resp(resp)
+  return make_request(urllib.request.Request(get_url(path), headers=headers, method="GET"))
 
 def post(path: str, data=None) -> dict:
-  url = get_url(path)
   body = None
   req_headers = headers.copy()
   if data is not None:
     body = json.dumps(data).encode("utf-8")
     req_headers["Content-Type"] = "application/json"
-  req = urllib.request.Request(url, headers=req_headers, data=body, method="POST")
-  with urllib.request.urlopen(req) as resp:
-    return _return_resp(resp)
+  return make_request(urllib.request.Request(get_url(path), headers=req_headers, data=body, method="POST"))
 
 def delete(path: str) -> dict:
-  url = get_url(path)
-  req = urllib.request.Request(url, headers=headers, method="DELETE")
-  with urllib.request.urlopen(req) as resp:
-    return _return_resp(resp)
+  return make_request(urllib.request.Request(get_url(path), headers=headers, method="DELETE"))
