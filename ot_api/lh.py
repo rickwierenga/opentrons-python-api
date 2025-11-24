@@ -246,3 +246,20 @@ def drop_tip_in_place(pipette_id: str, run_id: Optional[str]=None):
   }
 
   return ot_api.runs.enqueue_command("dropTipInPlace", params, intent="setup", run_id=run_id)
+
+
+@command
+def save_position(
+  pipette_id: str,
+  position_id: Optional[str] = None,
+  fail_on_not_homed: bool = True,
+  run_id: Optional[str] = None,
+):
+  params = {
+    "pipetteId": pipette_id,
+    "failOnNotHomed": fail_on_not_homed,
+  }
+  if position_id is not None:
+    params["positionId"] = position_id
+
+  return ot_api.runs.enqueue_command("savePosition", params, intent="setup", run_id=run_id)
