@@ -142,6 +142,7 @@ def dispense(
   well_name: str,
   volume: float,
   flow_rate: float,
+  blow_out_air_volume: float,
   pipette_id,
   run_id: Optional[str]=None,
   offset_x: float = 0,
@@ -161,7 +162,8 @@ def dispense(
     },
     "flowRate": flow_rate,
     "volume": volume,
-    "pipetteId": pipette_id
+    "pipetteId": pipette_id,
+    "pushOut": blow_out_air_volume
   }
 
   return ot_api.runs.enqueue_command("dispense", params, intent="setup", run_id=run_id)
